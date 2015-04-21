@@ -29,6 +29,8 @@ namespace EventOrganize
             _geolocator.DesiredAccuracy = PositionAccuracy.High;
             _geolocator.MovementThreshold = 100;
             _geolocator.PositionChanged += _geolocator_PositionChanged;
+
+            lblLoading.Visibility = Visibility.Visible;
         }
 
         private async void LoadAllLocalEvents()
@@ -55,6 +57,7 @@ namespace EventOrganize
             }
             else
             {
+                lblLoading.Visibility = Visibility.Collapsed;
                 ListItems.ItemsSource = items;
                 this.btnAddEvent.IsEnabled = true;
             }

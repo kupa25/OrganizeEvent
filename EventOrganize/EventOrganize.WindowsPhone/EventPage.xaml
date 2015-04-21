@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Background="#FF428513">
         
         <TextBox x:Name="txtJoinID" HorizontalAlignment="Left" Margin="94,70,0,0" TextWrapping="Wrap" PlaceholderText="JOIN ID" VerticalAlignment="Top" Width="183"/>
         <Button x:Name="btnJoin" Content="JOIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="126,148,165,0" Click="Button_Click"/>

@@ -8,8 +8,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        
+    <Grid Background="#FF428513">
+
         <Button x:Name="btnAddEvent" Content="Add Event" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="136,452,0,0" Click="btnTest_Click"/>
         <ListView x:Name="ListItems" HorizontalAlignment="Left" Height="421" VerticalAlignment="Top" Width="390">
             <ListView.ItemTemplate>
@@ -21,6 +21,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="136,520,0,0" Click="btnJoinEvent_Click"/>
+        <TextBlock x:Name="lblLoading" TextWrapping="Wrap" Text="Loading local events........." VerticalAlignment="Top" Height="33" Margin="10,145,10,0" FontSize="20"/>
 
     </Grid>
 </Page>
