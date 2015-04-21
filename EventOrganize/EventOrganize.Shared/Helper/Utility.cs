@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
+using Windows.Storage;
 using EventOrganize.Domain;
 using Newtonsoft.Json.Linq;
 
@@ -10,6 +11,8 @@ namespace EventOrganize.Helper
 {
     public static class Utility
     {
+        private static ApplicationDataContainer cloudStorage = ApplicationData.Current.RoamingSettings;
+
         public static async void CreateAndUpdateTags(double latitude, double longitute)
         {
             Debug.WriteLine("Updating tags started");
@@ -58,6 +61,22 @@ namespace EventOrganize.Helper
 
             Debug.WriteLine("Updating tags completed.  You are currently at zipcode: " + address.PostalAddress);
 
+        }
+
+        public static string GetValueFromCloud(string p)
+        {
+            return cloudStorage.Values.ContainsKey(p) ? (string)cloudStorage.Values[p] : string.Empty;
+        }
+
+        public static void RemoveFromCloud(string p)
+        {
+            cloudStorage.Values.Remove(p);
+        }
+
+        public static void AddToCloud(string key, string value)
+        {
+            RemoveFromCloud(key);
+            cloudStorage.Values.Add(key, value);
         }
     }
 }

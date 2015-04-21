@@ -1,0 +1,19 @@
+﻿<Page
+    x:Class="EventOrganize.EventPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EventOrganize"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        
+        <TextBox x:Name="txtJoinID" HorizontalAlignment="Left" Margin="94,70,0,0" TextWrapping="Wrap" PlaceholderText="JOIN ID" VerticalAlignment="Top" Width="183"/>
+        <Button x:Name="btnJoin" Content="JOIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="126,148,165,0" Click="Button_Click"/>
+        <TextBlock x:Name="lblEventName" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="36" Margin="10,10,124,0" Width="266"/>
+        <Button x:Name="btnLogout" Content="Peace out!" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="281,0,0,0" Click="Button_Click_1" FontSize="14"/>
+
+    </Grid>
+</Page>

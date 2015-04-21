@@ -33,8 +33,8 @@ namespace EventOrganizeService
 
             List<OrganizeEvent> organizeEvents = new List<OrganizeEvent>
             {
-                new OrganizeEvent {Id = Guid.NewGuid().ToString(), LeaderID = 2},
-                new OrganizeEvent {Id = Guid.NewGuid().ToString(), LeaderID = 3},
+                new OrganizeEvent {Id = Guid.NewGuid().ToString(), LeaderID = "Kshitij", Name = "Tech Talk", ZipCode = 32258},
+                new OrganizeEvent {Id = Guid.NewGuid().ToString(), LeaderID = "Kshitij", Name = "Code Camp", ZipCode = 32258},
             };
 
             foreach (OrganizeEvent organizeEvent in organizeEvents)

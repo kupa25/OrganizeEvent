@@ -11,7 +11,7 @@ namespace EventOrganize.Domain
         public string ID { get; set; }
 
         [JsonProperty(PropertyName = "LeaderID")]
-	    public int LeaderID  { get; set; }
+	    public string LeaderID  { get; set; }
 
         [JsonProperty(PropertyName = "locationLatitude")]
         public double locationLatitude { get; set; }

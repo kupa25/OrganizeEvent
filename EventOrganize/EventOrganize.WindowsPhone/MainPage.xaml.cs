@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -42,7 +43,7 @@ namespace EventOrganize
             _geolocator.MovementThreshold = 100;
             _geolocator.PositionChanged += _geolocator_PositionChanged;
 
-            LoadAllLocalEvents();
+            //LoadAllLocalEvents();
 
         }
 
@@ -98,50 +99,33 @@ namespace EventOrganize
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
+
+            LoadAllLocalEvents();
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-            int zipcode = 0;
-            int result;
-            //get the geolocation
-
-            if (App.address != null)
-            {
-                int.TryParse(App.address.PostalAddress, out result);
-                if (result > 0)
-                {
-                    zipcode = int.Parse(App.address.PostalAddress);
-                }
-            }
-
-            Debug.WriteLine("ZipCode: "+ zipcode);
-
-            //EventOrganizePush.NotifyAllUser("NotifyAlluser method invoked");
-            OrganizeEvent newEvent = new OrganizeEvent
-            {
-                LeaderID = 2
-                ,JoinID = "ABCD"
-                ,locationLatitude = lat
-                ,LocationLongitude = longitude
-                ,ZipCode = zipcode
-                ,Name = "DemoDay"
-            };
-
-            Debug.WriteLine("Passing the event to the mobile service to add");
-
-            EventOrganizePush.AddEvent(newEvent);
-
+            Frame.Navigate(typeof (AddEvent));
         }
 
-        private void CheckBoxComplete_Checked(object sender, RoutedEventArgs e)
+        private void CheckBoxComplete_Click(object sender, RoutedEventArgs e)
         {
-            btnJoinEvent.IsEnabled = (((CheckBox) sender).IsChecked.GetValueOrDefault(false));
+            var box = ((CheckBox) sender);
+
+            //btnRefresh.IsEnabled = box.IsChecked.GetValueOrDefault(false);
+
+            Helper.Utility.AddToCloud("JOINID", ((OrganizeEvent)box.DataContext).JoinID);
+            Helper.Utility.AddToCloud("EventName", ((OrganizeEvent)box.DataContext).Name);
+
+            Frame.Navigate(typeof (EventPage));
+            
         }
 
         private void btnJoinEvent_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("join event entered");
+            LoadAllLocalEvents();
         }
+
+        
     }
 }
