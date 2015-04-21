@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -38,9 +39,40 @@ namespace EventOrganize
             this.NavigationCacheMode = NavigationCacheMode.Required;
             _geolocator = new Geolocator();
             _geolocator.DesiredAccuracy = PositionAccuracy.High;
-            _geolocator.MovementThreshold = 10;
+            _geolocator.MovementThreshold = 100;
             _geolocator.PositionChanged += _geolocator_PositionChanged;
 
+            LoadAllLocalEvents();
+
+        }
+
+        private async void LoadAllLocalEvents()
+        {
+            MobileServiceCollection<OrganizeEvent, OrganizeEvent> items = null;
+            IMobileServiceTable<OrganizeEvent> organizeMobileServiceTable = App.EventOrganizeClient.GetTable<OrganizeEvent>();
+            MobileServiceInvalidOperationException exception = null;
+
+            try
+            {
+                items =
+                    await
+                        organizeMobileServiceTable.Where(
+                            eventItem => eventItem.ZipCode == 32258).ToCollectionAsync();
+            }
+            catch (MobileServiceInvalidOperationException e)
+            {
+                exception = e;
+            }
+
+            if (exception != null)
+            {
+                await new MessageDialog(exception.Message, "Error loading items").ShowAsync();
+            }
+            else
+            {
+                ListItems.ItemsSource = items;
+                this.btnAddEvent.IsEnabled = true;
+            }
         }
 
         private void _geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
@@ -70,7 +102,20 @@ namespace EventOrganize
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
+            int zipcode = 0;
+            int result;
             //get the geolocation
+
+            if (App.address != null)
+            {
+                int.TryParse(App.address.PostalAddress, out result);
+                if (result > 0)
+                {
+                    zipcode = int.Parse(App.address.PostalAddress);
+                }
+            }
+
+            Debug.WriteLine("ZipCode: "+ zipcode);
 
             //EventOrganizePush.NotifyAllUser("NotifyAlluser method invoked");
             OrganizeEvent newEvent = new OrganizeEvent
@@ -79,12 +124,24 @@ namespace EventOrganize
                 ,JoinID = "ABCD"
                 ,locationLatitude = lat
                 ,LocationLongitude = longitude
+                ,ZipCode = zipcode
+                ,Name = "DemoDay"
             };
 
             Debug.WriteLine("Passing the event to the mobile service to add");
 
             EventOrganizePush.AddEvent(newEvent);
 
+        }
+
+        private void CheckBoxComplete_Checked(object sender, RoutedEventArgs e)
+        {
+            btnJoinEvent.IsEnabled = (((CheckBox) sender).IsChecked.GetValueOrDefault(false));
+        }
+
+        private void btnJoinEvent_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("join event entered");
         }
     }
 }

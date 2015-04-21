@@ -28,5 +28,11 @@ namespace EventOrganize.Domain
         [JsonProperty(PropertyName = "JoinID")]
         public string JoinID { get; set; }
 
+        [JsonProperty(PropertyName = "ZipCode")]
+        public int ZipCode { get; set; }
+
+        [JsonProperty(PropertyName = "Name")]
+        public string Name { get; set; }
+
     }
 }

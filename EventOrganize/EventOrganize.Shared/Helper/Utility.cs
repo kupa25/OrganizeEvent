@@ -54,9 +54,10 @@ namespace EventOrganize.Helper
             };
 
             App.address = address;
-            App.UpdateTags();
+            //App.UpdateTags();
 
-            Debug.WriteLine("Updating tags completed");
+            Debug.WriteLine("Updating tags completed.  You are currently at zipcode: " + address.PostalAddress);
+
         }
     }
 }

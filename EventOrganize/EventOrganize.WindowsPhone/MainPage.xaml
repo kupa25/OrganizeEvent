@@ -9,7 +9,17 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Button x:Name="btnTest" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="152,167,0,0" Click="btnTest_Click"/>
+        <Button x:Name="btnAddEvent" Content="Add Event" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="136,452,0,0" Click="btnTest_Click"/>
+        <ListView x:Name="ListItems" HorizontalAlignment="Left" Height="421" VerticalAlignment="Top" Width="390">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Name="CheckBoxComplete" IsChecked="{Binding Complete, Mode=TwoWay}"  Click="CheckBoxComplete_Checked"  Content="{Binding Name}" Margin="10,5" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="btnJoinEvent" Content="Join Event" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="136,520,0,0" IsEnabled="False" Click="btnJoinEvent_Click"/>
 
     </Grid>
 </Page>
