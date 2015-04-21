@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Windows.Phone.UI.Input;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -51,8 +52,10 @@ namespace EventOrganize
             }
 
             App.JoinedEventName = lblEventName.Text = Helper.Utility.GetValueFromCloud("EventName");
+            Debug.WriteLine("Registering for Event: " + App.JoinedEventName);
         }
 
+        //Join button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //check whether the join id matches what we selected.
@@ -96,6 +99,7 @@ namespace EventOrganize
             }
         }
 
+        //Logout button
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Helper.Utility.RemoveFromCloud("JOINID");

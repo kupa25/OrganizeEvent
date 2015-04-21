@@ -88,7 +88,7 @@ namespace EventOrganize
                 await App.EventOrganizeClient.InvokeApiAsync("notifyGroupUsers", 
                     new JObject(
                         new JProperty("toast", message),
-                        new JProperty("EventName", eventName)));
+                        new JProperty("EventName", eventName.Replace(' ', '_'))));
 
                 Debug.WriteLine("NotifyGroup User method is complete with Toast: "+message + " And EventName: "+ eventName);
             }

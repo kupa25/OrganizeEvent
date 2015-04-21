@@ -159,7 +159,7 @@ EventOrganize.EventOrganizePush.UploadChannel();
 
             if (!string.IsNullOrEmpty(JoinedEventName))
             {
-                tags.Add(string.Format("Event:{0}", JoinedEventName));
+                tags.Add(string.Format("Event:{0}", JoinedEventName.Replace(' ', '_')));
             }
 
             if (address != null)
