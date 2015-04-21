@@ -77,5 +77,25 @@ namespace EventOrganize
             channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
             await App.EventOrganizeClient.GetPush().RegisterNativeAsync(channel.Uri, tags);
         }
+
+        internal static async void NotifyGroupUser(string message, string eventName)
+        {
+            try
+            {
+                //channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+                App.UpdateTags();
+                //await App.EventOrganizeClient.GetPush().RegisterNativeAsync(channel.Uri);
+                await App.EventOrganizeClient.InvokeApiAsync("notifyGroupUsers", 
+                    new JObject(
+                        new JProperty("toast", message),
+                        new JProperty("EventName", eventName)));
+
+                Debug.WriteLine("NotifyGroup User method is complete with Toast: "+message + " And EventName: "+ eventName);
+            }
+            catch (Exception exception)
+            {
+                HandleRegisterException(exception);
+            }
+        }
     }
 }

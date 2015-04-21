@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -48,14 +38,14 @@ namespace EventOrganize
                 //Make it visible only if its the leader visiting
                 var isleader = string.Compare(Helper.Utility.GetValueFromCloud("LeaderID"), Helper.Utility.GetValueFromCloud("AzureLeaderID"), StringComparison.CurrentCultureIgnoreCase) == 0;
 
-                txtLeaderMsg.Visibility = isleader ? Visibility.Visible : Visibility.Collapsed;
+                btnleader.Visibility = txtLeaderMsg.Visibility = isleader ? Visibility.Visible : Visibility.Collapsed;
             }
             else
             {
                 txtJoinID.Visibility = Visibility.Visible;
                 btnJoin.Visibility = Visibility.Visible;
                 btnLogout.Visibility = Visibility.Collapsed;
-                txtLeaderMsg.Visibility = Visibility.Collapsed;
+                btnleader.Visibility = txtLeaderMsg.Visibility = Visibility.Collapsed;
 
                 txtEventStuff.Text = "";
             }
@@ -80,7 +70,7 @@ namespace EventOrganize
 
                 //Make it visible only if its the leader visiting
                 var isleader = string.Compare(Helper.Utility.GetValueFromCloud("LeaderID"), Helper.Utility.GetValueFromCloud("AzureLeaderID"), StringComparison.CurrentCultureIgnoreCase) == 0;
-                txtLeaderMsg.Visibility = isleader ? Visibility.Visible : Visibility.Collapsed;
+                btnleader.Visibility = txtLeaderMsg.Visibility = isleader ? Visibility.Visible : Visibility.Collapsed;
 
                 //Update the appropriate tags for this event
                 Helper.Utility.CreateAndUpdateTags();
@@ -110,7 +100,20 @@ namespace EventOrganize
         {
             Helper.Utility.RemoveFromCloud("JOINID");
             Helper.Utility.RemoveFromCloud("PartofEvent");
+            
+            App.JoinedEventName = null;
+            //Update the appropriate tags for this event
+            Helper.Utility.CreateAndUpdateTags();
+
             Frame.Navigate(typeof (MainPage));
+        }
+
+        private void txtleaderSend_Click(object sender, RoutedEventArgs e)
+        {
+            //send a message to everyone listening.
+
+            EventOrganizePush.NotifyGroupUser(txtLeaderMsg.Text, App.JoinedEventName);
+
         }
     }
 }

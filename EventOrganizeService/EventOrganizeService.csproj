@@ -77,6 +77,7 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Http">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
@@ -186,6 +187,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\NotifyAllUsersController.cs" />
+    <Compile Include="Controllers\NotifyGroupUsersController.cs" />
     <Compile Include="Controllers\OrganizeEventController.cs" />
     <Compile Include="DataObjects\OrganizeEvent.cs" />
     <Compile Include="Models\EventOrganizeContext.cs" />

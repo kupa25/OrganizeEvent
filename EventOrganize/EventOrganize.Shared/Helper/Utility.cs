@@ -45,24 +45,24 @@ namespace EventOrganize.Helper
                 jsonAddress = jsonResource[0]["address"];
             }
 
-            if (jsonAddress == null)
+            Address address = null;
+
+            if (jsonAddress != null)
             {
-                return;
+                address = new Address
+                {
+                    PostalAddress = (string) jsonAddress["postalCode"],
+                    Locality = (string) jsonAddress["locality"],
+                    County = (string) jsonAddress["adminDistrict2"],
+                    State = (string) jsonAddress["adminDistrict"],
+                    Country = (string) jsonAddress["countryRegion"],
+                };
+
+                App.address = address;
+                Debug.WriteLine("Updating tags completed.  You are currently at zipcode: " + address.PostalAddress);
             }
 
-            var address = new Address
-            {
-                PostalAddress = (string)jsonAddress["postalCode"],
-                Locality = (string)jsonAddress["locality"],
-                County = (string)jsonAddress["adminDistrict2"],
-                State = (string)jsonAddress["adminDistrict"],
-                Country = (string)jsonAddress["countryRegion"],
-            };
-
-            App.address = address;
             App.UpdateTags();
-
-            Debug.WriteLine("Updating tags completed.  You are currently at zipcode: " + address.PostalAddress);
 
         }
 

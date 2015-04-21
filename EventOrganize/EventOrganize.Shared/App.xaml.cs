@@ -152,44 +152,44 @@ EventOrganize.EventOrganizePush.UploadChannel();
             deferral.Complete();
         }
 
-        public static List<string> UpdateTags()
+        public static void UpdateTags()
         {
             //check if the channel uri is null
-
-            if (address == null) return new List<string>();
-
             var tags = new List<string>();
 
             if (!string.IsNullOrEmpty(JoinedEventName))
             {
                 tags.Add(string.Format("Event:{0}", JoinedEventName));
             }
-            if (address.PostalAddress != null)
+
+            if (address != null)
             {
-                tags.Add(string.Format("PostalAddress:{0}", address.PostalAddress.Replace(' ', '_')));
-            }
-            if (address.Locality != null)
-            {
-                tags.Add(string.Format("Locality:{0}", address.Locality.Replace(' ', '_')));
-            }
-            if (address.County != null)
-            {
-                tags.Add(string.Format("County:{0}", address.County.Replace(' ', '_')));
-            }
-            if (address.State != null)
-            {
-                tags.Add(string.Format("State:{0}", address.State.Replace(' ', '_')));
-            }
-            if (address.Country != null)
-            {
-                tags.Add(string.Format("Country:{0}", address.Country.Replace(' ', '_')));
+                if (address.PostalAddress != null)
+                {
+                    tags.Add(string.Format("PostalAddress:{0}", address.PostalAddress.Replace(' ', '_')));
+                }
+                if (address.Locality != null)
+                {
+                    tags.Add(string.Format("Locality:{0}", address.Locality.Replace(' ', '_')));
+                }
+                if (address.County != null)
+                {
+                    tags.Add(string.Format("County:{0}", address.County.Replace(' ', '_')));
+                }
+                if (address.State != null)
+                {
+                    tags.Add(string.Format("State:{0}", address.State.Replace(' ', '_')));
+                }
+                if (address.Country != null)
+                {
+                    tags.Add(string.Format("Country:{0}", address.Country.Replace(' ', '_')));
+                }
             }
 
 
 #if WINDOWS_PHONE_APP
             EventOrganizePush.UpdateAzureTags(tags);
 #endif
-            return tags;
         }
     }
 }
