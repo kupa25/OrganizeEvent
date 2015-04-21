@@ -1,26 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Geolocation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 using EventOrganize.Domain;
 using Microsoft.WindowsAzure.MobileServices;
-using Newtonsoft.Json.Linq;
 
 namespace EventOrganize
 {
@@ -30,8 +17,8 @@ namespace EventOrganize
     public sealed partial class MainPage : Page
     {
         private Geolocator _geolocator = null;
-        private double lat;
-        private double longitude;
+        //private double lat;
+        //private double longitude;
 
         public MainPage()
         {
@@ -42,9 +29,6 @@ namespace EventOrganize
             _geolocator.DesiredAccuracy = PositionAccuracy.High;
             _geolocator.MovementThreshold = 100;
             _geolocator.PositionChanged += _geolocator_PositionChanged;
-
-            //LoadAllLocalEvents();
-
         }
 
         private async void LoadAllLocalEvents()
@@ -78,11 +62,11 @@ namespace EventOrganize
 
         private void _geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
-            lat = args.Position.Coordinate.Latitude;
-            longitude = args.Position.Coordinate.Longitude;
+            App.Lattitude = args.Position.Coordinate.Latitude;
+            App.longtitude = args.Position.Coordinate.Longitude;
 
             //Do something with this.
-            Helper.Utility.CreateAndUpdateTags(lat, longitude);
+            Helper.Utility.CreateAndUpdateTags();
         }
 
         /// <summary>
@@ -116,6 +100,7 @@ namespace EventOrganize
 
             Helper.Utility.AddToCloud("JOINID", ((OrganizeEvent)box.DataContext).JoinID);
             Helper.Utility.AddToCloud("EventName", ((OrganizeEvent)box.DataContext).Name);
+            Helper.Utility.AddToCloud("AzureLeaderID", ((OrganizeEvent)box.DataContext).LeaderID);
 
             Frame.Navigate(typeof (EventPage));
             

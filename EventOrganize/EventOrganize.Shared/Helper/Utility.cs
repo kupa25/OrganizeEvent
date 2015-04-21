@@ -13,8 +13,11 @@ namespace EventOrganize.Helper
     {
         private static ApplicationDataContainer cloudStorage = ApplicationData.Current.RoamingSettings;
 
-        public static async void CreateAndUpdateTags(double latitude, double longitute)
+        public static async void CreateAndUpdateTags()
         {
+            double latitude = App.Lattitude;
+            double longitute = App.longtitude;
+
             Debug.WriteLine("Updating tags started");
             //using the bing api from here
 
@@ -57,7 +60,7 @@ namespace EventOrganize.Helper
             };
 
             App.address = address;
-            //App.UpdateTags();
+            App.UpdateTags();
 
             Debug.WriteLine("Updating tags completed.  You are currently at zipcode: " + address.PostalAddress);
 

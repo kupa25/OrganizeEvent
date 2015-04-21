@@ -43,15 +43,24 @@ namespace EventOrganize
                 txtJoinID.Visibility = Visibility.Collapsed;
                 btnJoin.Visibility = Visibility.Collapsed;
                 btnLogout.Visibility = Visibility.Visible;
+                
+                txtEventStuff.Text = "Event Info\nSomething happened\n\n\nAnd it failed";
+                //Make it visible only if its the leader visiting
+                var isleader = string.Compare(Helper.Utility.GetValueFromCloud("LeaderID"), Helper.Utility.GetValueFromCloud("AzureLeaderID"), StringComparison.CurrentCultureIgnoreCase) == 0;
+
+                txtLeaderMsg.Visibility = isleader ? Visibility.Visible : Visibility.Collapsed;
             }
             else
             {
                 txtJoinID.Visibility = Visibility.Visible;
                 btnJoin.Visibility = Visibility.Visible;
                 btnLogout.Visibility = Visibility.Collapsed;
+                txtLeaderMsg.Visibility = Visibility.Collapsed;
+
+                txtEventStuff.Text = "";
             }
 
-            lblEventName.Text = Helper.Utility.GetValueFromCloud("EventName");
+            App.JoinedEventName = lblEventName.Text = Helper.Utility.GetValueFromCloud("EventName");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -65,6 +74,16 @@ namespace EventOrganize
                 //Get the current page ready
                 txtJoinID.Visibility = Visibility.Collapsed;
                 btnJoin.Visibility = Visibility.Collapsed;
+                btnLogout.Visibility = Visibility.Visible;
+
+                txtEventStuff.Text = "Event Info\nSomething happened\n\n\nAnd it failed";
+
+                //Make it visible only if its the leader visiting
+                var isleader = string.Compare(Helper.Utility.GetValueFromCloud("LeaderID"), Helper.Utility.GetValueFromCloud("AzureLeaderID"), StringComparison.CurrentCultureIgnoreCase) == 0;
+                txtLeaderMsg.Visibility = isleader ? Visibility.Visible : Visibility.Collapsed;
+
+                //Update the appropriate tags for this event
+                Helper.Utility.CreateAndUpdateTags();
             }
             else
             {

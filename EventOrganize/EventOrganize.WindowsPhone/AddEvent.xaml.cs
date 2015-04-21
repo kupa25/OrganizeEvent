@@ -97,6 +97,8 @@ namespace EventOrganize
                 ,Name = txtEventName.Text
             };
 
+            Helper.Utility.AddToCloud("LeaderID", txtLeaderName.Text);
+
             Debug.WriteLine("Getting ready to Add an event");
 
             EventOrganizePush.AddEvent(newEvent);

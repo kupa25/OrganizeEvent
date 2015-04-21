@@ -26,7 +26,7 @@ namespace EventOrganize
             {
                 await App.EventOrganizeClient.GetPush().RegisterNativeAsync(channel.Uri);
 
-                await App.EventOrganizeClient.InvokeApiAsync("notifyAllUsers", new JObject(new JProperty("toast", "Registering the URL Upload Channel")));
+                await App.EventOrganizeClient.InvokeApiAsync("notifyAllUsers", new JObject(new JProperty("toast", "Welcome... To the organizer")));
 
                 Debug.WriteLine("Upload channel method is complete");
             }

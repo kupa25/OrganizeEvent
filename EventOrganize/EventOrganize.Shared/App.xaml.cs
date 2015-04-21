@@ -28,6 +28,9 @@ namespace EventOrganize
     {
 
         public static Address address;
+        public static double Lattitude;
+        public static double longtitude;
+        public static string JoinedEventName;
 
         // http://go.microsoft.com/fwlink/?LinkId=290986&clcid=0x409
         public static Microsoft.WindowsAzure.MobileServices.MobileServiceClient EventOrganizeClient = new Microsoft.WindowsAzure.MobileServices.MobileServiceClient(
@@ -157,6 +160,10 @@ EventOrganize.EventOrganizePush.UploadChannel();
 
             var tags = new List<string>();
 
+            if (!string.IsNullOrEmpty(JoinedEventName))
+            {
+                tags.Add(string.Format("Event:{0}", JoinedEventName));
+            }
             if (address.PostalAddress != null)
             {
                 tags.Add(string.Format("PostalAddress:{0}", address.PostalAddress.Replace(' ', '_')));
