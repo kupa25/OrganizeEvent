@@ -29,7 +29,9 @@ namespace EventOrganize
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!string.IsNullOrEmpty(Helper.Utility.GetValueFromCloud("PartofEvent")))
+            App.JoinedEventName = lblEventName.Text = Helper.Utility.GetValueFromCloud("EventName");
+
+            if (string.Compare(Helper.Utility.GetValueFromCloud("PartofEvent"), App.JoinedEventName, StringComparison.CurrentCultureIgnoreCase) == 0)
             {
                 txtJoinID.Visibility = Visibility.Collapsed;
                 btnJoin.Visibility = Visibility.Collapsed;
@@ -51,7 +53,7 @@ namespace EventOrganize
                 txtEventStuff.Text = "";
             }
 
-            App.JoinedEventName = lblEventName.Text = Helper.Utility.GetValueFromCloud("EventName");
+            
             Debug.WriteLine("Registering for Event: " + App.JoinedEventName);
         }
 
@@ -62,7 +64,7 @@ namespace EventOrganize
             var confirmJoinId = Helper.Utility.GetValueFromCloud("JOINID");
             if (string.Compare(txtJoinID.Text, confirmJoinId, StringComparison.CurrentCultureIgnoreCase) == 0)
             {
-                Helper.Utility.AddToCloud("PartofEvent", txtJoinID.Text);
+                Helper.Utility.AddToCloud("PartofEvent", App.JoinedEventName);
 
                 //Get the current page ready
                 txtJoinID.Visibility = Visibility.Collapsed;

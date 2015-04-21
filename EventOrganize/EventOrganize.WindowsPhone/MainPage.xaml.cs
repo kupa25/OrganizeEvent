@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Windows.Devices.Geolocation;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -31,6 +32,8 @@ namespace EventOrganize
             _geolocator.PositionChanged += _geolocator_PositionChanged;
 
             lblLoading.Visibility = Visibility.Visible;
+            btnRefresh.IsEnabled = false;
+
         }
 
         private async void LoadAllLocalEvents()
@@ -41,10 +44,24 @@ namespace EventOrganize
 
             try
             {
+                //Debug.WriteLine("Trying to load items for the zipcode: " + int.Parse(App.address.PostalAddress));
+
+                var zipcode = 32258;
+
+                if (App.address != null)
+                {
+                    Debug.WriteLine("We have an address value");
+                    zipcode = int.Parse(App.address.PostalAddress);
+                }
+                else
+                {
+                    Debug.WriteLine("we don't have an address obj yet");
+                }
+
                 items =
                     await
                         organizeMobileServiceTable.Where(
-                            eventItem => eventItem.ZipCode == 32258).ToCollectionAsync();
+                            eventItem => eventItem.ZipCode == zipcode).ToCollectionAsync();
             }
             catch (MobileServiceInvalidOperationException e)
             {
@@ -63,13 +80,21 @@ namespace EventOrganize
             }
         }
 
-        private void _geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
+        private async void _geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
             App.Lattitude = args.Position.Coordinate.Latitude;
             App.longtitude = args.Position.Coordinate.Longitude;
 
-            //Do something with this.
-            Helper.Utility.CreateAndUpdateTags();
+                //Do something with this.
+                await Helper.Utility.CreateAndUpdateTags();
+                Debug.WriteLine("***Done with tags about to load all the events");
+
+            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
+            {
+                LoadAllLocalEvents();
+                btnRefresh.IsEnabled = true;
+            });
+            
         }
 
         /// <summary>
@@ -87,7 +112,7 @@ namespace EventOrganize
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
 
-            LoadAllLocalEvents();
+            //LoadAllLocalEvents();
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
@@ -106,14 +131,11 @@ namespace EventOrganize
             Helper.Utility.AddToCloud("AzureLeaderID", ((OrganizeEvent)box.DataContext).LeaderID);
 
             Frame.Navigate(typeof (EventPage));
-            
         }
 
-        private void btnJoinEvent_Click(object sender, RoutedEventArgs e)
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             LoadAllLocalEvents();
         }
-
-        
     }
 }

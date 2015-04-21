@@ -6,6 +6,7 @@ using System.Text;
 using Windows.Storage;
 using EventOrganize.Domain;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace EventOrganize.Helper
 {
@@ -13,7 +14,7 @@ namespace EventOrganize.Helper
     {
         private static ApplicationDataContainer cloudStorage = ApplicationData.Current.RoamingSettings;
 
-        public static async void CreateAndUpdateTags()
+        public static async Task<bool> CreateAndUpdateTags()
         {
             double latitude = App.Lattitude;
             double longitute = App.longtitude;
@@ -63,6 +64,8 @@ namespace EventOrganize.Helper
             }
 
             App.UpdateTags();
+
+            return true;
 
         }
 

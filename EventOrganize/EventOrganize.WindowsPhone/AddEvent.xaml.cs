@@ -67,10 +67,15 @@ namespace EventOrganize
                 {
                     zipcode = int.Parse(App.address.PostalAddress);
                 }
-            }
 
-            Debug.WriteLine("ZipCode: " + zipcode);
+                Debug.WriteLine("Adding an event at ZipCode: " + zipcode);
             lblLocation.Text = "You are at " + zipcode + " zipcode";
+            }
+            else
+            {
+                Debug.WriteLine("Adding an event at Default ZipCode: " + zipcode);
+                lblLocation.Text = "You are at Default " + zipcode + " zipcode";
+            }
 
             btnAddEvent.IsEnabled = true;
         }

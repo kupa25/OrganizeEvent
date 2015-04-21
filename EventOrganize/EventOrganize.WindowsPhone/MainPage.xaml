@@ -20,7 +20,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="136,520,0,0" Click="btnJoinEvent_Click"/>
+        <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="136,520,0,0" Click="btnRefresh_Click"/>
         <TextBlock x:Name="lblLoading" TextWrapping="Wrap" Text="Loading local events........." VerticalAlignment="Top" Height="33" Margin="10,145,10,0" FontSize="20"/>
 
     </Grid>
